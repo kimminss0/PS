@@ -42,15 +42,17 @@ int main(void) {
         auto [i1, j1] = wait_for_expand.front();
         wait_for_expand.pop();
 
-        for (auto [i2, j2] :
-             {pair{i1 - 1, j1}, {i1 + 1, j1}, {i1, j1 - 1}, {i1, j1 + 1}}) {
-          if (i2 < 0 || i2 >= n || j2 < 0 || j2 >= m)
+        for (auto [di, dj] : {pair{0, 1}, {0, -1}, {1, 0}, {-1, 0}}) {
+          int ni = i1 + di;
+          int nj = j1 + dj;
+
+          if (ni < 0 || ni >= n || nj < 0 || nj >= m)
             continue;
-          if (!map[i2][j2])
+          if (!map[ni][nj])
             continue; /* already visited(erased) or not colored */
 
-          map[i2][j2] = false;
-          wait_for_expand.push({i2, j2});
+          map[ni][nj] = false;
+          wait_for_expand.push({ni, nj});
           size++;
         }
       }
