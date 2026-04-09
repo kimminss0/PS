@@ -43,7 +43,7 @@ int main(void) {
         wait_for_expand.pop();
 
         for (auto [i2, j2] :
-             {pair{i1 - 1, j1}, {i1, j1 - 1}, {i1, j1 + 1}, {i1 + 1, j1}}) {
+             {pair{i1 - 1, j1}, {i1 + 1, j1}, {i1, j1 - 1}, {i1, j1 + 1}}) {
           if (i2 < 0 || i2 >= n || j2 < 0 || j2 >= m)
             continue;
           if (!map[i2][j2])
