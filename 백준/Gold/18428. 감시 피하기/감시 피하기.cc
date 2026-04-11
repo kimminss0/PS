@@ -77,6 +77,7 @@ int main(void) {
     success = true;
   }
 
+  // potential duplication is intended
   for (size_t i = 0; i < v.size(); i++) {
     for (size_t j = i; j < v.size(); j++) {
       for (size_t k = j; k < v.size(); k++) {
