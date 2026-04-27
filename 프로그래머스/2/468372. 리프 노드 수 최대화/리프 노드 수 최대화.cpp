@@ -22,7 +22,7 @@ int solution(int dist_limit, int split_limit) {
     int answer = 0;
     
     for (int k = 0;; k++) {
-        long long cmp{split_limit * 1l};
+        long long cmp = split_limit;
         for (size_t i = 0; i < k; i++) {
             cmp /= 2;
         }
@@ -30,10 +30,7 @@ int solution(int dist_limit, int split_limit) {
             break;
 
         int l = 0;
-        while (true) {
-            cmp /= 3;
-            if (cmp == 0)
-                break;
+        while ((cmp /= 3) != 0) {
             l++;
         }
         answer = max(answer, max_leaf(k, l, dist_limit));
