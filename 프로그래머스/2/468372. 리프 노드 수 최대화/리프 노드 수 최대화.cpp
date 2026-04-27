@@ -5,28 +5,17 @@
 using namespace std;
 
 int max_leaf(int k, int l, int dist_limit) {
-    if (k + l == 0)
-        return 1;
-
-    vector<int> d_cnt(k + l + 1);
-    d_cnt[0] = 1;
-    int sum_d_cnt = 1;
-    for (int i = 1; i < k + l; i++) {
-        d_cnt[i] = d_cnt[i - 1] * (i < k + 1 ? 2 : 3);
-        sum_d_cnt += d_cnt[i];
-    }
-    d_cnt[k + l] = 0;
+    int budget = dist_limit;
+    int frontier = 1;
+    int leaf_cnt = 1;
     
-    int res = d_cnt[k + l - 1] * (l > 0 ? 3 : 2);
-    while (sum_d_cnt-- > dist_limit) {
-        int i = 1;
-        while (d_cnt[i] > (d_cnt[i - 1] - 1) * (i - 1 < k ? 2 : 3)) {
-            i++;
-        }
-        d_cnt[i - 1]--;
-        res -= (i - 1 < k ? 1 : 2);
+    for (size_t i = 0; budget > 0 && i < k + l; i++) {
+        int splits = min(budget, frontier);
+        budget -= splits;
+        leaf_cnt += splits * (i < k ? 1 : 2);
+        frontier = splits * (i < k ? 2 : 3);
     }
-    return res;
+    return leaf_cnt;
 }
 
 int solution(int dist_limit, int split_limit) {
