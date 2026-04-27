@@ -22,19 +22,17 @@ int solution(int dist_limit, int split_limit) {
     int answer = 0;
     
     for (int k = 0;; k++) {
-        long long cmp_lk{min(split_limit * 1l, dist_limit * 18l - 1)};
-        long long cmp_k{min(split_limit * 1l, dist_limit * 4l - 1)};
+        long long cmp{split_limit * 1l};
         for (size_t i = 0; i < k; i++) {
-            cmp_lk /= 2;
-            cmp_k /= 2;
+            cmp /= 2;
         }
-        if (cmp_k == 0)
+        if (cmp == 0)
             break;
 
         int l = 0;
         while (true) {
-        	cmp_lk /= 3;
-            if (cmp_lk == 0)
+            cmp /= 3;
+            if (cmp == 0)
                 break;
             l++;
         }
