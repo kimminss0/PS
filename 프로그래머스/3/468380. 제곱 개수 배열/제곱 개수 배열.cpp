@@ -1,4 +1,3 @@
-#include <string>
 #include <vector>
 
 using namespace std;
@@ -22,6 +21,7 @@ vector<long long> solution(vector<int> arr, long long l, long long r) {
     
     // pair of (d, cnt)
     vector<pair<int, int>> intervals;
+    intervals.reserve(arr.size() * 2);
     
     while (j_hi - 1 < arr.size()) {
         int x_lo = arr[j_lo - 1] - c_lo + 1;
