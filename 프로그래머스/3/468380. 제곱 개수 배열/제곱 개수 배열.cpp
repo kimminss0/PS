@@ -5,16 +5,15 @@
 using namespace std;
 
 vector<long long> solution(vector<int> arr, long long l, long long r) {
-    long long len = r - l + 1;
+    const long long len = r - l + 1;
     
     long long S = 0;
-    long long i_lo = 1, i_hi = len + 1;
     int j_lo = 1, j_hi = 1;
     int c_lo = 1, c_hi;
     for (long long acc = 0; j_hi - 1 < arr.size(); j_hi++) {
         long long e = arr[j_hi - 1];
-        if (acc + e > i_hi - 1) {
-            c_hi = i_hi - acc;
+        if (acc + e >= len) {
+            c_hi = len - acc + 1;
             S += e * (c_hi - 1);
             break;
         }
@@ -30,32 +29,20 @@ vector<long long> solution(vector<int> arr, long long l, long long r) {
         int x_hi = arr[j_hi - 1] - c_hi + 1;
         
         int d = arr[j_hi - 1] - arr[j_lo - 1];
-        int advance;
-        if (x_lo < x_hi) {
-            // touch left
-            advance = x_lo;
+        int advance = min(x_lo, x_hi);
+        intervals.push_back({S, d, advance});
+
+        S += static_cast<long long>(d) * advance;
+        c_hi += advance;
+        c_lo += advance;
+        if (x_lo <= x_hi) {
             j_lo++;
             c_lo = 1;
-            c_hi += x_lo;
-        } else if (x_lo > x_hi) {
-            // touch right
-            advance = x_hi;
+        }
+        if (x_lo >= x_hi) {
             j_hi++;
-            c_lo += x_hi;
-            c_hi = 1;
-        } else {
-            // touch both
-            advance = x_hi;
-            j_lo++;
-            j_hi++;
-            c_lo = 1;
             c_hi = 1;
         }
-
-        intervals.push_back({S, d, advance});
-        S += static_cast<long long>(d) * advance;
-        i_lo += advance;
-        i_hi += advance;
     }
     intervals.push_back({S, 0, 1});
     
